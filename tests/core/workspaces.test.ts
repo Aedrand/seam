@@ -5,9 +5,9 @@ import {
   createWorkspace,
   joinWorkspace,
   listWorkspaces,
-  linkRepo,
-  unlinkRepo,
-  resolveRepo,
+  linkProject,
+  unlinkProject,
+  resolveProject,
 } from "../../src/core/workspaces.js";
 
 describe("workspaces", () => {
@@ -113,42 +113,42 @@ describe("workspaces", () => {
     });
   });
 
-  describe("repo linking", () => {
+  describe("project linking", () => {
     it("links a repo to a workspace and resolves it", () => {
       createWorkspace(db, userId, "my-project");
-      linkRepo(db, userId, "github.com/org/repo", "my-project");
+      linkProject(db, userId, "/Users/sarah/projects/dashboard", "my-project");
 
-      const resolved = resolveRepo(db, userId, "github.com/org/repo");
+      const resolved = resolveProject(db, userId, "/Users/sarah/projects/dashboard");
       expect(resolved).toBe("my-project");
     });
 
     it("returns null for unlinked repo", () => {
-      const resolved = resolveRepo(db, userId, "github.com/org/unknown");
+      const resolved = resolveProject(db, userId, "/Users/sarah/projects/unknown");
       expect(resolved).toBeNull();
     });
 
     it("overwrites existing link", () => {
       createWorkspace(db, userId, "project-a");
       createWorkspace(db, userId, "project-b");
-      linkRepo(db, userId, "github.com/org/repo", "project-a");
-      linkRepo(db, userId, "github.com/org/repo", "project-b");
+      linkProject(db, userId, "/Users/sarah/projects/dashboard", "project-a");
+      linkProject(db, userId, "/Users/sarah/projects/dashboard", "project-b");
 
-      const resolved = resolveRepo(db, userId, "github.com/org/repo");
+      const resolved = resolveProject(db, userId, "/Users/sarah/projects/dashboard");
       expect(resolved).toBe("project-b");
     });
 
     it("unlinks a repo", () => {
       createWorkspace(db, userId, "my-project");
-      linkRepo(db, userId, "github.com/org/repo", "my-project");
-      unlinkRepo(db, userId, "github.com/org/repo");
+      linkProject(db, userId, "/Users/sarah/projects/dashboard", "my-project");
+      unlinkProject(db, userId, "/Users/sarah/projects/dashboard");
 
-      const resolved = resolveRepo(db, userId, "github.com/org/repo");
+      const resolved = resolveProject(db, userId, "/Users/sarah/projects/dashboard");
       expect(resolved).toBeNull();
     });
 
     it("fails to unlink a repo that isn't linked", () => {
-      expect(() => unlinkRepo(db, userId, "github.com/org/unknown")).toThrow(
-        "No repo link found"
+      expect(() => unlinkProject(db, userId, "/Users/sarah/projects/unknown")).toThrow(
+        "No project link found"
       );
     });
 
@@ -161,7 +161,7 @@ describe("workspaces", () => {
         .prepare("SELECT id FROM users WHERE display_name = 'eve'")
         .get() as { id: string };
 
-      expect(() => linkRepo(db, eve.id, "github.com/org/repo", "my-project")).toThrow(
+      expect(() => linkProject(db, eve.id, "/Users/sarah/projects/dashboard", "my-project")).toThrow(
         "not a member"
       );
     });

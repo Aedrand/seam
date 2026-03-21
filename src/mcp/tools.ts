@@ -39,18 +39,18 @@ export const TOOL_DEFINITIONS = [
       "Switch your active workspace. All subsequent context operations will use this workspace. You must have already joined the workspace.",
   },
   {
-    name: "link_repo",
+    name: "link_project",
     description:
-      "Link a repository to a workspace so the workspace is automatically activated when you work in that repo. Use the git remote URL as the repo identifier (e.g., 'github.com/org/repo'). You must be a member of the workspace.",
+      "Link a project directory to a workspace so the workspace is automatically activated when you work in that directory. Use the absolute path of your working directory as the identifier (e.g., '/Users/sarah/projects/dashboard'). You must be a member of the workspace.",
   },
   {
-    name: "unlink_repo",
+    name: "unlink_project",
     description:
-      "Remove a repository-to-workspace link.",
+      "Remove a project-to-workspace link.",
   },
   {
-    name: "resolve_repo",
+    name: "resolve_project",
     description:
-      "Look up which workspace is linked to a repository and automatically set it as active. Call this on startup with your current repo's git remote URL. If no link exists, returns a message suggesting you link one.",
+      "Look up which workspace is linked to this project directory and automatically set it as active. Call this on startup with your current working directory path. If no link exists, returns a message suggesting you link one.",
   },
 ];

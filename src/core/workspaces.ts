@@ -111,10 +111,10 @@ export function getWorkspaceIdForMember(
   return workspace.id;
 }
 
-export function linkRepo(
+export function linkProject(
   db: Database.Database,
   userId: string,
-  repoIdentifier: string,
+  projectPath: string,
   workspaceName: string
 ): void {
   // Verify the workspace exists and user is a member
@@ -125,33 +125,33 @@ export function linkRepo(
     `INSERT INTO repo_links (user_id, repo_identifier, workspace_name, created_at)
      VALUES (?, ?, ?, ?)
      ON CONFLICT (user_id, repo_identifier) DO UPDATE SET workspace_name = ?, created_at = ?`
-  ).run(userId, repoIdentifier, workspaceName, now, workspaceName, now);
+  ).run(userId, projectPath, workspaceName, now, workspaceName, now);
 }
 
-export function unlinkRepo(
+export function unlinkProject(
   db: Database.Database,
   userId: string,
-  repoIdentifier: string
+  projectPath: string
 ): void {
   const result = db.prepare(
     "DELETE FROM repo_links WHERE user_id = ? AND repo_identifier = ?"
-  ).run(userId, repoIdentifier);
+  ).run(userId, projectPath);
 
   if (result.changes === 0) {
-    throw new SeamError("link_not_found", "No repo link found for that identifier.");
+    throw new SeamError("link_not_found", "No project link found for that path.");
   }
 }
 
-export function resolveRepo(
+export function resolveProject(
   db: Database.Database,
   userId: string,
-  repoIdentifier: string
+  projectPath: string
 ): string | null {
   const row = db
     .prepare(
       "SELECT workspace_name FROM repo_links WHERE user_id = ? AND repo_identifier = ?"
     )
-    .get(userId, repoIdentifier) as { workspace_name: string } | undefined;
+    .get(userId, projectPath) as { workspace_name: string } | undefined;
 
   return row?.workspace_name ?? null;
 }

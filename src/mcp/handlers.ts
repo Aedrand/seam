@@ -5,9 +5,9 @@ import {
   joinWorkspace,
   listWorkspaces,
   getWorkspaceIdForMember,
-  linkRepo,
-  unlinkRepo,
-  resolveRepo,
+  linkProject,
+  unlinkProject,
+  resolveProject,
 } from "../core/workspaces.js";
 import { SeamError } from "../core/errors.js";
 
@@ -61,12 +61,12 @@ export class SeamHandlers {
           return this.handleListWorkspaces(userId);
         case "set_workspace":
           return this.handleSetWorkspace(userId, sessionId, args.name as string);
-        case "link_repo":
-          return this.handleLinkRepo(userId, args.repo_identifier as string, args.workspace as string);
-        case "unlink_repo":
-          return this.handleUnlinkRepo(userId, args.repo_identifier as string);
-        case "resolve_repo":
-          return this.handleResolveRepo(userId, sessionId, args.repo_identifier as string);
+        case "link_project":
+          return this.handleLinkProject(userId, args.project_path as string, args.workspace as string);
+        case "unlink_project":
+          return this.handleUnlinkProject(userId, args.project_path as string);
+        case "resolve_project":
+          return this.handleResolveProject(userId, sessionId, args.project_path as string);
         default:
           return this.errorResult(`Unknown tool: ${toolName}`);
       }
@@ -143,24 +143,24 @@ export class SeamHandlers {
     return this.textResult(`Active workspace set to "${name}".`);
   }
 
-  private handleLinkRepo(userId: string, repoIdentifier: string, workspaceName: string): ToolResult {
-    linkRepo(this.db, userId, repoIdentifier, workspaceName);
-    return this.textResult(`Linked "${repoIdentifier}" to workspace "${workspaceName}". Future sessions from this repo will auto-activate that workspace.`);
+  private handleLinkProject(userId: string, projectPath: string, workspaceName: string): ToolResult {
+    linkProject(this.db, userId, projectPath, workspaceName);
+    return this.textResult(`Linked "${projectPath}" to workspace "${workspaceName}". Future sessions in this directory will auto-activate that workspace.`);
   }
 
-  private handleUnlinkRepo(userId: string, repoIdentifier: string): ToolResult {
-    unlinkRepo(this.db, userId, repoIdentifier);
-    return this.textResult(`Unlinked "${repoIdentifier}".`);
+  private handleUnlinkProject(userId: string, projectPath: string): ToolResult {
+    unlinkProject(this.db, userId, projectPath);
+    return this.textResult(`Unlinked "${projectPath}".`);
   }
 
-  private handleResolveRepo(userId: string, sessionId: string, repoIdentifier: string): ToolResult {
-    const workspaceName = resolveRepo(this.db, userId, repoIdentifier);
+  private handleResolveProject(userId: string, sessionId: string, projectPath: string): ToolResult {
+    const workspaceName = resolveProject(this.db, userId, projectPath);
     if (!workspaceName) {
-      return this.textResult(`No workspace linked to "${repoIdentifier}". Use link_repo to create a link, or set_workspace to choose one manually.`);
+      return this.textResult(`No workspace linked to "${projectPath}". Use link_project to create a link, or set_workspace to choose one manually.`);
     }
     const workspaceId = getWorkspaceIdForMember(this.db, userId, workspaceName);
     this.activeSessions.set(sessionId, { workspaceName, workspaceId });
-    return this.textResult(`Resolved "${repoIdentifier}" to workspace "${workspaceName}" and set as active.`);
+    return this.textResult(`Resolved "${projectPath}" to workspace "${workspaceName}" and set as active.`);
   }
 
   private textResult(text: string): ToolResult {

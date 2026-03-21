@@ -62,15 +62,15 @@ export function createMcpRequestHandler(db: Database.Database): {
     set_workspace: {
       name: z.string().describe("Workspace name"),
     },
-    link_repo: {
-      repo_identifier: z.string().describe("Repository identifier, typically the git remote URL (e.g. 'github.com/org/repo')"),
+    link_project: {
+      project_path: z.string().describe("Absolute path of the project directory (e.g. '/Users/sarah/projects/dashboard')"),
       workspace: z.string().describe("Workspace name to link to"),
     },
-    unlink_repo: {
-      repo_identifier: z.string().describe("Repository identifier to unlink"),
+    unlink_project: {
+      project_path: z.string().describe("Project directory path to unlink"),
     },
-    resolve_repo: {
-      repo_identifier: z.string().describe("Repository identifier to resolve (e.g. from 'git remote get-url origin')"),
+    resolve_project: {
+      project_path: z.string().describe("Absolute path of your current working directory"),
     },
   };
 
