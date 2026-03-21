@@ -4,16 +4,14 @@
       <stop offset="0%" stop-color="#0c0e1a"/>
       <stop offset="100%" stop-color="#10132a"/>
     </linearGradient>
-    <radialGradient id="server-glow" cx="440" cy="195" r="200" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.18"/>
-      <stop offset="50%" stop-color="#6366f1" stop-opacity="0.06"/>
-      <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
-    </radialGradient>
+    <linearGradient id="server-glow" x1="290" y1="100" x2="590" y2="300" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1a1e3a"/>
+      <stop offset="100%" stop-color="#111525"/>
+    </linearGradient>
   </defs>
 
   <!-- Background -->
   <rect width="880" height="340" rx="14" fill="url(#bg)"/>
-  <ellipse cx="440" cy="195" rx="200" ry="130" fill="url(#server-glow)"/>
 
   <!-- Title -->
   <text x="440" y="38" text-anchor="middle" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="28" font-weight="800" fill="#e8eaf6">seam</text>
@@ -58,15 +56,17 @@
 
   <!-- ═══ CENTER: SEAM SERVER ═══ -->
   <g>
-    <!-- Server box body -->
+    <!-- Glow behind server -->
+    <rect x="282" y="92" width="316" height="216" rx="18" fill="#6366f1" opacity="0.06"/>
+
+    <!-- Server box -->
     <rect x="290" y="100" width="300" height="200" rx="10" fill="#111525" stroke="#6366f1" stroke-width="1.5"/>
 
-    <!-- Server header background (clipped to top corners) -->
-    <clipPath id="header-clip"><rect x="290" y="100" width="300" height="28" rx="10"/></clipPath>
-    <rect x="290" y="100" width="300" height="28" fill="#181d35" clip-path="url(#header-clip)"/>
+    <!-- Server header background (inset to avoid touching corners) -->
+    <rect x="292" y="102" width="296" height="24" rx="0" fill="#181d35"/>
 
     <!-- Divider line -->
-    <line x1="291" y1="128" x2="589" y2="128" stroke="#2d3555" stroke-width="1"/>
+    <line x1="292" y1="128" x2="588" y2="128" stroke="#3a4265" stroke-width="0.5"/>
 
     <!-- Status dot + host -->
     <circle cx="308" cy="114" r="4" fill="#6366f1"/>
