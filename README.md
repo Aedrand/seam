@@ -234,11 +234,10 @@ Display names are unique and immutable. The API key is your permanent credential
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `PORT` | `3000` | Server port (takes precedence) |
-| `SEAM_PORT` | `3000` | Server port (fallback if PORT is not set) |
+| `SEAM_PORT` | `3000` | Server port (also respects `PORT` for platform compatibility) |
 | `SEAM_DB_PATH` | `./seam.db` | SQLite database path |
 
-Regenerate the bootstrap token if it leaks (existing registrations stay valid):
+Regenerate the bootstrap token if it leaks (existing users and API keys stay valid):
 
 ```bash
 npm run cli -- regenerate-token
