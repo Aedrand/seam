@@ -8,9 +8,21 @@ Seam is a tiny MCP server that gives agents a shared place to read and write pro
 
 An agent connects, reads the index, knows what's going on, and gets to work. Before it leaves, it writes back what it learned. The next agent picks up where it left off. No cold starts, no re-explaining, no "wait, didn't we already decide this?"
 
-It's an Express server, a SQLite database, and 8 MCP tools. About 400 lines of actual logic. We're not trying to build an AI memory platform or an agent orchestration framework -- there are plenty of those already, and they're all heavier than they need to be.
+It's an Express server, a SQLite database, and 8 MCP tools. About 400 lines of actual logic. Simple enough to understand in one sitting, useful enough to change how your agents work together.
 
-## Quick Start
+## Table of Contents
+
+- [Quick Start](#quick-start)
+- [How It Works](#how-it-works)
+- [MCP Tools](#mcp-tools)
+- [Workspaces](#workspaces)
+- [API](#api)
+- [Configuration](#configuration)
+- [Development](#development)
+- [What Seam Is Not](#what-seam-is-not)
+
+<details>
+<summary><h2>Quick Start</h2></summary>
 
 ### Path A: Connect to an existing server
 
@@ -58,7 +70,8 @@ Share this with your team to register.
 
 Share this with your team like a Wi-Fi password. Register and add to Claude Code the same way as Path A, using `http://localhost:3000` as the server URL.
 
-**Deploy to Railway (production):**
+<details>
+<summary><strong>Deploy to Railway (production)</strong></summary>
 
 Prerequisites: [Railway](https://railway.com) account and [Railway CLI](https://docs.railway.com/reference/cli-api) installed.
 
@@ -87,7 +100,12 @@ railway logs
 
 Register and add to Claude Code using the domain Railway assigned.
 
-## How It Works
+</details>
+
+</details>
+
+<details>
+<summary><h2>How It Works</h2></summary>
 
 Seam stores shared context as an **index** plus **sections**.
 
@@ -124,7 +142,10 @@ The index refreshes automatically -- every `read_section` call returns the curre
 
 **Version checking** keeps agents from stepping on each other. Every section has a version number. When you update a section, you include the version you last read. If someone else changed it since, the write fails -- re-read, incorporate their changes, try again. Simple optimistic concurrency, no locking, no coordination server.
 
-## MCP Tools
+</details>
+
+<details>
+<summary><h2>MCP Tools</h2></summary>
 
 Agents learn how to use Seam from the tool descriptions alone. No setup, no instructions file -- installing the MCP server is the only step.
 
@@ -146,7 +167,10 @@ Agents learn how to use Seam from the tool descriptions alone. No setup, no inst
 | `list_workspaces()` | See your workspaces. |
 | `set_workspace(name)` | Switch active workspace. |
 
-## Workspaces
+</details>
+
+<details>
+<summary><h2>Workspaces</h2></summary>
 
 All context is scoped to a workspace. Different projects, different workspaces, no cross-contamination.
 
@@ -158,7 +182,10 @@ All context is scoped to a workspace. Different projects, different workspaces, 
 https://your-server.example.com/mcp?workspace=dashboard-redesign
 ```
 
-## API
+</details>
+
+<details>
+<summary><h2>API</h2></summary>
 
 ### `POST /register`
 
@@ -174,7 +201,10 @@ The only REST endpoint. Everything else goes through MCP.
 
 Display names are unique and immutable. The API key is your permanent credential.
 
-## Configuration
+</details>
+
+<details>
+<summary><h2>Configuration</h2></summary>
 
 | Variable | Default | Description |
 |----------|---------|-------------|
@@ -188,7 +218,10 @@ Regenerate the bootstrap token if it leaks (existing registrations stay valid):
 npm run cli -- regenerate-token
 ```
 
-## Development
+</details>
+
+<details>
+<summary><h2>Development</h2></summary>
 
 ```bash
 npm run dev        # Start dev server
@@ -196,13 +229,15 @@ npm test           # Run tests
 npm run build      # Build for production
 ```
 
+</details>
+
 ## What Seam Is Not
 
-**Not a memory system.** Seam doesn't store conversation history or help an agent remember its own sessions. It stores shared project context that any agent can contribute to and benefit from.
+**Not a memory system.** Seam doesn't store conversation history or help an agent remember its own sessions. It stores shared project context that any agent can contribute to and benefit from. Different problem, different tools.
 
-**Not a coordination platform.** Agents don't message each other through Seam. They read and write shared understanding. If you need agent-to-agent messaging, consensus protocols, or task orchestration -- that's a different tool for a different day.
+**Not a coordination platform.** Agents don't message each other through Seam. They read and write shared understanding. If you need agent-to-agent messaging, consensus protocols, or task orchestration -- that's a different problem too.
 
-**Not an AI product.** No embeddings, no knowledge graphs, no semantic search, no LLM on the server. It's a SQLite database with an MCP interface. The intelligence is in the agents, not the infrastructure.
+**Not magic.** No embeddings, no knowledge graphs, no semantic search, no LLM on the server. It's a SQLite database with an MCP interface. The intelligence is in the agents, not the infrastructure.
 
 ## License
 
