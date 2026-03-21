@@ -2,22 +2,24 @@
   "hooks": {
     "SessionStart": [
       {
-        "matcher": "startup",
+        "matcher": "*",
         "hooks": [
           {
             "type": "command",
-            "command": "cat ${CLAUDE_PLUGIN_ROOT}/hooks/session-start.md"
+            "command": "cat ${CLAUDE_PLUGIN_ROOT}/hooks/session-start.md",
+            "timeout": 10
           }
         ]
       }
     ],
     "Stop": [
       {
-        "matcher": ".*",
+        "matcher": "*",
         "hooks": [
           {
             "type": "command",
-            "command": "cat ${CLAUDE_PLUGIN_ROOT}/hooks/session-stop.md"
+            "command": "cat ${CLAUDE_PLUGIN_ROOT}/hooks/session-stop.md",
+            "timeout": 10
           }
         ]
       }
