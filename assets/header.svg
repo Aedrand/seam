@@ -70,13 +70,11 @@
     <text x="306" y="150" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="9.5" font-weight="600" fill="#818cf8">## Shared Context</text>
     <text x="306" y="164" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="9" fill="#6b7394">dashboard-redesign</text>
 
-    <text x="306" y="184" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="9.5" fill="#a78bfa">### design-philosophy</text>
-    <text x="500" y="184" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="9" fill="#6b7394">(v2)</text>
+    <text x="306" y="184" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="9.5"><tspan fill="#a78bfa">### design-philosophy</tspan> <tspan fill="#6b7394" font-size="9">(v2)</tspan></text>
     <text x="306" y="198" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="8.5" fill="#8892b0">Dense dashboard for analysts.</text>
     <text x="306" y="212" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="8" fill="#556180" font-style="italic">*sarah, 2026-03-21*</text>
 
-    <text x="306" y="232" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="9.5" fill="#a78bfa">### current-status</text>
-    <text x="440" y="232" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="9" fill="#6b7394">(v5)</text>
+    <text x="306" y="232" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="9.5"><tspan fill="#a78bfa">### current-status</tspan> <tspan fill="#6b7394" font-size="9">(v5)</tspan></text>
     <text x="306" y="246" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="8.5" fill="#8892b0">Sprint 3 in progress.</text>
     <text x="306" y="260" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="8" fill="#556180" font-style="italic">*james, 2026-03-21*</text>
 
