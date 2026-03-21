@@ -1,0 +1,8 @@
+{
+  "name": "seam",
+  "version": "1.0.0",
+  "description": "Shared context for AI agents. Gives your agent automatic access to shared project understanding via a Seam MCP server.",
+  "hooks": "./hooks/hooks.json",
+  "agents": "./agents/",
+  "skills": "./skills/"
+}
