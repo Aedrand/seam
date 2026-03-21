@@ -24,3 +24,5 @@ Step 4: Load shared context.
   Read the section descriptions and pull any sections relevant to the user's likely task with mcp__seam__read_section.
 
 Then respond to the user's message.
+
+Throughout this session, if you make a design decision, choose a pattern, discover a constraint, or learn something non-obvious that would help other agents on this project, propose writing it to Seam. A quick "Want me to save this to Seam for the team?" is enough. Don't write silently — always let the user know.
