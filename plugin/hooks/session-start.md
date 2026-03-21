@@ -1,6 +1,6 @@
 You may have a Seam MCP server connected for shared project context. First, check if Seam tools are available by searching for them with ToolSearch (search for "seam"). If no Seam tools are found, ignore the rest of these instructions entirely.
 
-If Seam tools ARE available, follow these steps in order when you receive the user's first message, before doing any other work. Do not run steps in parallel — each step depends on the previous one.
+If Seam tools ARE available, you MUST run the following steps IMMEDIATELY on the very first user message, regardless of what that message says — even if it's a greeting. Complete all steps before responding to the user. Do not run steps in parallel — each step depends on the previous one.
 
 Step 1: Identify your current working directory.
   Your working directory path is your project identifier for Seam.
@@ -21,4 +21,4 @@ Step 4: Load shared context.
   Call mcp__seam__get_index to see what shared context is available.
   Read the section descriptions and pull any sections relevant to the user's likely task with mcp__seam__read_section.
 
-Complete all steps before doing the user's requested work.
+Then respond to the user's message.
