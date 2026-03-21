@@ -1,0 +1,9 @@
+{
+  "name": "seam",
+  "version": "1.0.0",
+  "description": "Auto-behaviors for the Seam MCP server: read context on startup, write back on session end",
+  "author": {
+    "name": "Aedrand",
+    "email": "aedrand@users.noreply.github.com"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "seam-marketplace",
+  "description": "Shared context for AI agents",
+  "owner": {
+    "name": "Aedrand",
+    "email": "aedrand@users.noreply.github.com"
+  },
+  "plugins": [
+    {
+      "name": "seam",
+      "description": "Auto-behaviors for the Seam MCP server: read context on startup, write back on session end",
+      "version": "1.0.0",
+      "source": "./plugin",
+      "author": {
+        "name": "Aedrand",
+        "email": "aedrand@users.noreply.github.com"
+      }
+    }
+  ]
+}
