@@ -1,114 +1,136 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 320" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 340" fill="none">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="900" y2="320" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#0f172a"/>
-      <stop offset="100%" stop-color="#1e293b"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="880" y2="340" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0c0e1a"/>
+      <stop offset="100%" stop-color="#10132a"/>
     </linearGradient>
-    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#818cf8"/>
-      <stop offset="100%" stop-color="#6366f1"/>
-    </linearGradient>
-    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#818cf8" stop-opacity="0"/>
-      <stop offset="15%" stop-color="#818cf8" stop-opacity="0.6"/>
-      <stop offset="50%" stop-color="#6366f1" stop-opacity="0.8"/>
-      <stop offset="85%" stop-color="#818cf8" stop-opacity="0.6"/>
-      <stop offset="100%" stop-color="#818cf8" stop-opacity="0"/>
-    </linearGradient>
-    <linearGradient id="dashed-line" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#818cf8" stop-opacity="0.2"/>
-      <stop offset="50%" stop-color="#818cf8" stop-opacity="0.5"/>
-      <stop offset="100%" stop-color="#818cf8" stop-opacity="0.8"/>
-    </linearGradient>
+    <radialGradient id="server-glow" cx="440" cy="195" r="180" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+    </radialGradient>
   </defs>
 
   <!-- Background -->
-  <rect width="900" height="320" rx="12" fill="url(#bg)"/>
+  <rect width="880" height="340" rx="14" fill="url(#bg)"/>
+  <ellipse cx="440" cy="195" rx="200" ry="130" fill="url(#server-glow)"/>
 
-  <!-- Subtle grid pattern -->
-  <g opacity="0.04" stroke="#94a3b8" stroke-width="1">
-    <line x1="0" y1="50" x2="900" y2="50"/>
-    <line x1="0" y1="100" x2="900" y2="100"/>
-    <line x1="0" y1="150" x2="900" y2="150"/>
-    <line x1="0" y1="200" x2="900" y2="200"/>
-    <line x1="0" y1="250" x2="900" y2="250"/>
-    <line x1="150" y1="0" x2="150" y2="320"/>
-    <line x1="300" y1="0" x2="300" y2="320"/>
-    <line x1="450" y1="0" x2="450" y2="320"/>
-    <line x1="600" y1="0" x2="600" y2="320"/>
-    <line x1="750" y1="0" x2="750" y2="320"/>
+  <!-- Title -->
+  <text x="440" y="38" text-anchor="middle" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="28" font-weight="800" fill="#e8eaf6">seam</text>
+  <text x="440" y="58" text-anchor="middle" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="10" fill="#64748b" letter-spacing="4">SHARED CONTEXT FOR AI AGENTS</text>
+
+  <!-- ═══ LEFT PERSON: Sarah ═══ -->
+  <g>
+    <!-- Avatar -->
+    <circle cx="95" cy="145" r="24" fill="rgba(99,102,241,0.12)" stroke="rgba(99,102,241,0.25)" stroke-width="1.5"/>
+    <text x="95" y="152" text-anchor="middle" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="20" font-weight="700" fill="#6366f1">S</text>
+
+    <!-- Name -->
+    <text x="95" y="188" text-anchor="middle" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="15" font-weight="700" fill="#e2e8f0">Sarah</text>
+
+    <!-- Location -->
+    <text x="95" y="203" text-anchor="middle" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="9" fill="#475569">San Francisco</text>
+
+    <!-- Device -->
+    <rect x="55" y="212" width="80" height="16" rx="4" fill="none" stroke="#252b45" stroke-width="0.8"/>
+    <text x="95" y="223" text-anchor="middle" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="8" fill="#334155">Laptop</text>
+
+    <!-- Agent badge -->
+    <rect x="50" y="236" width="90" height="22" rx="6" fill="rgba(99,102,241,0.06)" stroke="rgba(99,102,241,0.12)" stroke-width="1"/>
+    <circle cx="66" cy="247" r="3" fill="#22c55e"/>
+    <text x="78" y="251" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="10" fill="#64748b">Agent</text>
   </g>
 
-  <!-- Title and tagline -->
-  <text x="680" y="68" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, monospace" font-size="42" font-weight="bold" fill="#f1f5f9" letter-spacing="-1">seam</text>
-  <text x="680" y="95" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, monospace" font-size="13" fill="#64748b">shared context for AI agents</text>
+  <!-- ═══ LEFT ARROWS ═══ -->
+  <g>
+    <!-- Arrow right (writes) -->
+    <line x1="160" y1="180" x2="280" y2="180" stroke="#6366f1" stroke-width="1.3" stroke-dasharray="6 4" opacity="0.3"/>
+    <polygon points="280,177 287,180 280,183" fill="#6366f1" opacity="0.35"/>
 
-  <!-- Machine 1 group -->
-  <rect x="30" y="42" width="175" height="90" rx="6" fill="none" stroke="#334155" stroke-width="1" stroke-dasharray="4 3" opacity="0.6"/>
-  <text x="118" y="58" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, monospace" font-size="9" fill="#475569">sarah's laptop</text>
-  <rect x="48" y="68" width="140" height="44" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
-  <text x="118" y="95" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, monospace" font-size="13" fill="#94a3b8">Agent A</text>
+    <!-- Arrow left (reads) -->
+    <line x1="160" y1="200" x2="280" y2="200" stroke="#6366f1" stroke-width="1.3" stroke-dasharray="6 4" opacity="0.3"/>
+    <polygon points="160,197 153,200 160,203" fill="#6366f1" opacity="0.35"/>
 
-  <!-- Machine 2 group -->
-  <rect x="30" y="148" width="175" height="90" rx="6" fill="none" stroke="#334155" stroke-width="1" stroke-dasharray="4 3" opacity="0.6"/>
-  <text x="118" y="164" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, monospace" font-size="9" fill="#475569">andrew's desktop</text>
-  <rect x="48" y="174" width="140" height="44" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1.5"/>
-  <text x="118" y="201" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, monospace" font-size="13" fill="#94a3b8">Agent B</text>
+    <!-- Labels -->
+    <text x="220" y="174" text-anchor="middle" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="7" fill="#475569" letter-spacing="1.5">WRITES</text>
+    <text x="220" y="216" text-anchor="middle" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="7" fill="#475569" letter-spacing="1.5">READS</text>
+  </g>
 
-  <!-- Machine 3 group -->
-  <rect x="30" y="254" width="175" height="56" rx="6" fill="none" stroke="#334155" stroke-width="1" stroke-dasharray="4 3" opacity="0.4"/>
-  <text x="118" y="270" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, monospace" font-size="9" fill="#475569">CI server</text>
-  <rect x="48" y="278" width="140" height="24" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1" opacity="0.6"/>
-  <text x="118" y="295" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, monospace" font-size="11" fill="#64748b">Agent C</text>
+  <!-- ═══ CENTER: SEAM SERVER ═══ -->
+  <g>
+    <!-- Server box -->
+    <rect x="290" y="100" width="300" height="200" rx="10" fill="#111525" stroke="#6366f1" stroke-width="1.5"/>
 
-  <!-- Internet cloud -->
-  <text x="310" y="165" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, monospace" font-size="9" fill="#475569" opacity="0.8">internet</text>
+    <!-- Server header -->
+    <rect x="290" y="100" width="300" height="28" rx="10" fill="#181d35"/>
+    <rect x="290" y="118" width="300" height="10" fill="#181d35"/>
+    <rect x="290" y="128" width="300" height="1" fill="#252b45"/>
+    <circle cx="308" cy="114" r="4" fill="#6366f1"/>
+    <text x="320" y="118" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="11" fill="#94a3b8">seam.up.railway.app</text>
 
-  <!-- Connection lines A -->
-  <line x1="205" y1="90" x2="355" y2="155" stroke="#818cf8" stroke-width="1.2" opacity="0.35" stroke-dasharray="6 4"/>
-  <text x="268" y="112" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, monospace" font-size="9" fill="#818cf8" opacity="0.5">MCP</text>
+    <!-- Context content -->
+    <text x="306" y="150" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="9.5" font-weight="600" fill="#818cf8">## Shared Context</text>
+    <text x="306" y="164" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="9" fill="#475569">dashboard-redesign</text>
 
-  <!-- Connection lines B -->
-  <line x1="205" y1="196" x2="355" y2="165" stroke="#818cf8" stroke-width="1.2" opacity="0.35" stroke-dasharray="6 4"/>
-  <text x="268" y="192" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, monospace" font-size="9" fill="#818cf8" opacity="0.5">MCP</text>
+    <text x="306" y="184" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="9.5" fill="#a78bfa">### design-philosophy</text>
+    <text x="500" y="184" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="9" fill="#475569">(v2)</text>
+    <text x="306" y="198" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="8.5" fill="#64748b">Dense dashboard for analysts.</text>
+    <text x="306" y="212" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="8" fill="#334155" font-style="italic">*sarah, 2026-03-21*</text>
 
-  <!-- Connection lines C -->
-  <line x1="205" y1="288" x2="355" y2="175" stroke="#818cf8" stroke-width="1" opacity="0.2" stroke-dasharray="6 4"/>
+    <text x="306" y="232" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="9.5" fill="#a78bfa">### current-status</text>
+    <text x="440" y="232" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="9" fill="#475569">(v5)</text>
+    <text x="306" y="246" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="8.5" fill="#64748b">Sprint 3 in progress.</text>
+    <text x="306" y="260" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="8" fill="#334155" font-style="italic">*james, 2026-03-21*</text>
 
-  <!-- Convergence point -->
-  <line x1="355" y1="155" x2="400" y2="155" stroke="#818cf8" stroke-width="1.5" opacity="0.5"/>
-  <line x1="355" y1="165" x2="400" y2="165" stroke="#818cf8" stroke-width="1.5" opacity="0.5"/>
-  <line x1="355" y1="175" x2="400" y2="175" stroke="#818cf8" stroke-width="1" opacity="0.3"/>
+    <!-- Fade at bottom -->
+    <rect x="291" y="270" width="298" height="29" rx="0" fill="url(#bg)" opacity="0.7"/>
+  </g>
 
-  <!-- Server node -->
-  <rect x="400" y="130" width="170" height="80" rx="10" fill="#1e293b" stroke="url(#accent)" stroke-width="2"/>
-  <circle cx="425" cy="155" r="5" fill="#818cf8" opacity="0.8"/>
-  <text x="480" y="162" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, monospace" font-size="14" font-weight="bold" fill="#e2e8f0">Seam</text>
-  <text x="480" y="188" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, monospace" font-size="10" fill="#64748b">SQLite + Express</text>
+  <!-- ═══ RIGHT ARROWS ═══ -->
+  <g>
+    <!-- Arrow left (writes) -->
+    <line x1="600" y1="180" x2="720" y2="180" stroke="#6366f1" stroke-width="1.3" stroke-dasharray="6 4" opacity="0.3"/>
+    <polygon points="600,177 593,180 600,183" fill="#6366f1" opacity="0.35"/>
 
-  <!-- What's inside - small index preview -->
-  <rect x="608" y="128" width="260" height="86" rx="6" fill="#0f172a" stroke="#1e293b" stroke-width="1.5"/>
-  <text x="620" y="145" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, monospace" font-size="9" fill="#818cf8">## Shared Context</text>
-  <text x="620" y="160" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, monospace" font-size="9" fill="#64748b">### design-philosophy (v2)</text>
-  <text x="620" y="173" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, monospace" font-size="8" fill="#475569">Dense dashboard for analysts...</text>
-  <text x="620" y="186" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, monospace" font-size="9" fill="#64748b">### current-status (v5)</text>
-  <text x="620" y="199" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, monospace" font-size="8" fill="#475569">Sprint 3 in progress...</text>
-  <text x="620" y="210" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, monospace" font-size="8" fill="#334155" font-style="italic">*sarah, 2026-03-21*</text>
+    <!-- Arrow right (reads) -->
+    <line x1="600" y1="200" x2="720" y2="200" stroke="#6366f1" stroke-width="1.3" stroke-dasharray="6 4" opacity="0.3"/>
+    <polygon points="720,197 727,200 720,203" fill="#6366f1" opacity="0.35"/>
 
-  <!-- Arrow from server to preview -->
-  <line x1="570" y1="170" x2="605" y2="170" stroke="#334155" stroke-width="1"/>
+    <!-- Labels -->
+    <text x="660" y="174" text-anchor="middle" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="7" fill="#475569" letter-spacing="1.5">WRITES</text>
+    <text x="660" y="216" text-anchor="middle" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="7" fill="#475569" letter-spacing="1.5">READS</text>
+  </g>
 
-  <!-- Decorative line -->
-  <rect x="200" y="285" width="500" height="1.5" rx="1" fill="url(#line)"/>
+  <!-- ═══ RIGHT PERSON: James ═══ -->
+  <g>
+    <!-- Avatar -->
+    <circle cx="785" cy="145" r="24" fill="rgba(99,102,241,0.12)" stroke="rgba(99,102,241,0.25)" stroke-width="1.5"/>
+    <text x="785" y="152" text-anchor="middle" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="20" font-weight="700" fill="#6366f1">J</text>
 
-  <!-- Bottom tags -->
-  <text x="310" y="305" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, monospace" font-size="10" fill="#475569">lightweight</text>
-  <text x="410" y="305" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, monospace" font-size="10" fill="#475569">readable</text>
-  <text x="510" y="305" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, monospace" font-size="10" fill="#475569">peer-to-peer</text>
-  <text x="600" y="305" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, monospace" font-size="10" fill="#475569">open</text>
+    <!-- Name -->
+    <text x="785" y="188" text-anchor="middle" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="15" font-weight="700" fill="#e2e8f0">James</text>
 
-  <!-- Dots between tags -->
-  <circle cx="360" cy="303" r="1.5" fill="#334155"/>
-  <circle cx="460" cy="303" r="1.5" fill="#334155"/>
-  <circle cx="555" cy="303" r="1.5" fill="#334155"/>
+    <!-- Location -->
+    <text x="785" y="203" text-anchor="middle" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="9" fill="#475569">New York</text>
+
+    <!-- Device -->
+    <rect x="745" y="212" width="80" height="16" rx="4" fill="none" stroke="#252b45" stroke-width="0.8"/>
+    <text x="785" y="223" text-anchor="middle" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="8" fill="#334155">Desktop</text>
+
+    <!-- Agent badge -->
+    <rect x="740" y="236" width="90" height="22" rx="6" fill="rgba(99,102,241,0.06)" stroke="rgba(99,102,241,0.12)" stroke-width="1"/>
+    <circle cx="756" cy="247" r="3" fill="#22c55e"/>
+    <text x="768" y="251" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="10" fill="#64748b">Agent</text>
+  </g>
+
+  <!-- ═══ FOOTER ═══ -->
+  <line x1="32" y1="310" x2="848" y2="310" stroke="#1e2438" stroke-width="0.5"/>
+  <g font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="9" fill="#2d3555">
+    <text x="32" y="328">MIT Licensed</text>
+    <circle cx="110" cy="325" r="1.2" fill="#1e2438"/>
+    <text x="120" y="328">TypeScript</text>
+    <circle cx="190" cy="325" r="1.2" fill="#1e2438"/>
+    <text x="200" y="328">SQLite</text>
+    <circle cx="244" cy="325" r="1.2" fill="#1e2438"/>
+    <text x="254" y="328">MCP Protocol</text>
+  </g>
 </svg>
