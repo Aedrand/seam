@@ -17,9 +17,9 @@
         "matcher": "*",
         "hooks": [
           {
-            "type": "command",
-            "command": "cat ${CLAUDE_PLUGIN_ROOT}/hooks/session-stop.md",
-            "timeout": 10
+            "type": "prompt",
+            "prompt": "Review what just happened in the conversation. Did you make a design decision, discover a constraint, choose a pattern, learn something non-obvious about the project, or produce context that would help another agent working on this project? Only consider things NOT already captured in the code itself — the 'why', not the 'what'. If yes, respond with 'block' and a brief note of what should be written to Seam. If nothing worth sharing, respond with 'approve'.",
+            "timeout": 15
           }
         ]
       }
