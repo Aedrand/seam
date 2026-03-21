@@ -56,11 +56,8 @@
 
   <!-- ═══ CENTER: SEAM SERVER ═══ -->
   <g>
-    <!-- Server box (fill is the body/content color) -->
+    <!-- Server box -->
     <rect x="290" y="100" width="300" height="200" rx="10" fill="#1c2240" stroke="#6366f1" stroke-width="1.5"/>
-
-    <!-- Header overlay (only covers top, stays above the rounded bottom corners) -->
-    <rect x="292" y="102" width="296" height="26" fill="#151a30"/>
 
     <!-- Divider line -->
     <line x1="292" y1="128" x2="588" y2="128" stroke="#3a4265" stroke-width="0.5"/>
