@@ -18,7 +18,7 @@
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "Review what just happened in the conversation. Did the agent make a design decision, discover a constraint, choose a pattern, learn something non-obvious, or produce context that would help another agent on this project? Only consider things NOT already in the code — the 'why', not the 'what'. Respond with ONLY a JSON object, no other text: {\"decision\": \"block\", \"reason\": \"Brief description of what should be written to Seam\"} if there is something worth sharing, or {\"decision\": \"approve\"} if not.",
+            "prompt": "Did the agent just make a decision or learn something that isn't captured in code and would help other agents? Respond ONLY with the JSON below, nothing else.\nYes: {\"decision\":\"block\",\"reason\":\"one sentence\"}\nNo: {\"decision\":\"approve\"}",
             "timeout": 15
           }
         ]
