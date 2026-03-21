@@ -32,7 +32,7 @@ describe("workspaces", () => {
     it("automatically joins the creator", () => {
       createWorkspace(db, userId, "my-project");
       const workspaces = listWorkspaces(db, userId);
-      expect(workspaces).toContain("my-project");
+      expect(workspaces).toContainEqual({ name: "my-project", joined: true });
     });
 
     it("fails if workspace already exists", () => {
@@ -62,7 +62,7 @@ describe("workspaces", () => {
 
       joinWorkspace(db, sarah.id, "my-project");
       const workspaces = listWorkspaces(db, sarah.id);
-      expect(workspaces).toContain("my-project");
+      expect(workspaces).toContainEqual({ name: "my-project", joined: true });
     });
 
     it("fails if workspace does not exist", () => {
@@ -76,7 +76,7 @@ describe("workspaces", () => {
       // Should not throw
       joinWorkspace(db, userId, "my-project");
       const workspaces = listWorkspaces(db, userId);
-      expect(workspaces).toEqual(["my-project"]);
+      expect(workspaces).toEqual([{ name: "my-project", joined: true }]);
     });
   });
 
@@ -86,12 +86,27 @@ describe("workspaces", () => {
       expect(workspaces).toEqual([]);
     });
 
-    it("returns all joined workspaces", () => {
+    it("returns all workspaces with joined status", () => {
       createWorkspace(db, userId, "project-a");
       createWorkspace(db, userId, "project-b");
       const workspaces = listWorkspaces(db, userId);
-      expect(workspaces).toContain("project-a");
-      expect(workspaces).toContain("project-b");
+      expect(workspaces).toContainEqual({ name: "project-a", joined: true });
+      expect(workspaces).toContainEqual({ name: "project-b", joined: true });
+    });
+
+    it("shows unjoined workspaces", () => {
+      createWorkspace(db, userId, "my-project");
+
+      // Register a second user
+      const { token } = initializeBootstrapToken(db);
+      register(db, token, "bob");
+      const bob = db
+        .prepare("SELECT id FROM users WHERE display_name = 'bob'")
+        .get() as { id: string };
+
+      // Bob sees my-project but hasn't joined
+      const workspaces = listWorkspaces(db, bob.id);
+      expect(workspaces).toContainEqual({ name: "my-project", joined: false });
     });
   });
 });

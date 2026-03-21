@@ -64,20 +64,25 @@ export function joinWorkspace(
   return { workspaceId: workspace.id };
 }
 
+export interface WorkspaceInfo {
+  name: string;
+  joined: boolean;
+}
+
 export function listWorkspaces(
   db: Database.Database,
   userId: string
-): string[] {
+): WorkspaceInfo[] {
   const rows = db
     .prepare(
-      `SELECT w.name FROM workspaces w
-       JOIN workspace_members wm ON w.id = wm.workspace_id
-       WHERE wm.user_id = ?
+      `SELECT w.name, CASE WHEN wm.user_id IS NOT NULL THEN 1 ELSE 0 END AS joined
+       FROM workspaces w
+       LEFT JOIN workspace_members wm ON w.id = wm.workspace_id AND wm.user_id = ?
        ORDER BY w.name`
     )
-    .all(userId) as { name: string }[];
+    .all(userId) as { name: string; joined: number }[];
 
-  return rows.map((r) => r.name);
+  return rows.map((r) => ({ name: r.name, joined: r.joined === 1 }));
 }
 
 export function getWorkspaceIdForMember(

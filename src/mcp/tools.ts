@@ -31,7 +31,7 @@ export const TOOL_DEFINITIONS = [
   },
   {
     name: "list_workspaces",
-    description: "List all workspaces you have joined.",
+    description: "List all workspaces on this server and whether you have joined each one. Use this to discover available workspaces.",
   },
   {
     name: "set_workspace",

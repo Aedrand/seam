@@ -120,9 +120,12 @@ export class SeamHandlers {
   private handleListWorkspaces(userId: string): ToolResult {
     const workspaces = listWorkspaces(this.db, userId);
     if (workspaces.length === 0) {
-      return this.textResult("You have not joined any workspaces yet.");
+      return this.textResult("No workspaces exist on this server yet. Create one with create_workspace.");
     }
-    return this.textResult("Your workspaces:\n" + workspaces.map((w) => `- ${w}`).join("\n"));
+    const lines = workspaces.map((w) =>
+      w.joined ? `- ${w.name} (joined)` : `- ${w.name} (not joined)`
+    );
+    return this.textResult("Workspaces on this server:\n" + lines.join("\n"));
   }
 
   private handleSetWorkspace(userId: string, sessionId: string, name: string): ToolResult {
