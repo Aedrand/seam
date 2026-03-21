@@ -13,6 +13,24 @@ export function createMcpRequestHandler(db: Database.Database): {
 } {
   const seamHandlers = new SeamHandlers(db);
   const transports = new Map<string, StreamableHTTPServerTransport>();
+  const sessionLastActive = new Map<string, number>();
+
+  // Clean up sessions idle for more than 30 minutes
+  const SESSION_TTL_MS = 30 * 60 * 1000;
+  const cleanupInterval = setInterval(() => {
+    const now = Date.now();
+    for (const [sid, lastActive] of sessionLastActive) {
+      if (now - lastActive > SESSION_TTL_MS) {
+        const transport = transports.get(sid);
+        if (transport) {
+          transport.close?.();
+          transports.delete(sid);
+        }
+        sessionLastActive.delete(sid);
+      }
+    }
+  }, 5 * 60 * 1000); // Sweep every 5 minutes
+  cleanupInterval.unref(); // Don't prevent process exit
 
   // Map tool name to Zod shape for McpServer.tool() registration
   const zodSchemas: Record<string, Record<string, z.ZodTypeAny>> = {
@@ -78,9 +96,10 @@ export function createMcpRequestHandler(db: Database.Database): {
       return;
     }
 
-    // Existing session?
+    // Existing session? Auth already validated above — forward to transport.
     const sessionId = req.headers["mcp-session-id"] as string | undefined;
     if (sessionId && transports.has(sessionId)) {
+      sessionLastActive.set(sessionId, Date.now());
       const transport = transports.get(sessionId)!;
       await transport.handleRequest(req, res, req.body);
       return;
@@ -128,6 +147,7 @@ export function createMcpRequestHandler(db: Database.Database): {
       sessionIdGenerator: () => crypto.randomUUID(),
       onsessioninitialized: (newSessionId: string) => {
         transports.set(newSessionId, transport);
+        sessionLastActive.set(newSessionId, Date.now());
         const workspaceParam = req.query.workspace as string | undefined;
         if (workspaceParam) {
           seamHandlers.setDefaultWorkspace(newSessionId, user.id, workspaceParam);
@@ -137,7 +157,10 @@ export function createMcpRequestHandler(db: Database.Database): {
 
     transport.onclose = () => {
       const sid = transport.sessionId;
-      if (sid) transports.delete(sid);
+      if (sid) {
+        transports.delete(sid);
+        sessionLastActive.delete(sid);
+      }
     };
 
     await server.connect(transport);

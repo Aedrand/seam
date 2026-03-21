@@ -34,9 +34,12 @@ export function initializeBootstrapToken(
 
 export function regenerateBootstrapToken(db: Database.Database): string {
   const token = generateToken("boot");
-  db.prepare("UPDATE server_config SET value = ? WHERE key = 'bootstrap_token'").run(
+  const result = db.prepare("UPDATE server_config SET value = ? WHERE key = 'bootstrap_token'").run(
     token
   );
+  if (result.changes === 0) {
+    throw new SeamError("no_bootstrap_token", "No bootstrap token exists. Start the server first to initialize one.");
+  }
   return token;
 }
 
