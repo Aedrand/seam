@@ -4,42 +4,12 @@
 
 Items we want to build next. These came up during MVP development and are high-value, low-complexity additions.
 
-### Repo-to-Workspace Linking
+*No items currently — all priority items have been implemented.*
 
-**The problem:** When an agent starts a session, it has to manually set or join a workspace. If you work across multiple projects, you're calling `set_workspace` every time you switch repos.
+### Completed
 
-**What it could look like:**
-- A new tool `link_workspace(repo, workspace)` that maps a repo identifier to a workspace name
-- The repo identifier could be the git remote URL (e.g., `github.com/Aedrand/seam`) or the directory basename
-- On session start, the MCP client passes a repo identifier (via query param or tool call), and the server auto-sets the active workspace based on any existing link
-- Links are stored per user — different users can link the same repo to different workspaces if needed
-- `unlink_workspace(repo)` to remove a mapping
-- Falls back to normal `set_workspace` if no link exists
-
-**Why it matters:** Eliminates the most common manual step in using Seam. You open a project, the agent is already in the right workspace. Zero friction.
-
-**Design questions to resolve:**
-- What identifies a "repo"? Git remote URL is most reliable, but what if the agent isn't in a git repo?
-- Should the link be set by the agent automatically (e.g., "I'm in repo X, link it to this workspace"), or only via explicit user instruction?
-- Could the MCP client pass the repo identifier automatically via a query parameter (like `?workspace=` today), so the server resolves it without a tool call?
-
----
-
-### Workspace Discovery
-
-**The problem:** `list_workspaces` only shows workspaces you've joined. There's no way to discover what other workspaces exist on the server. A new teammate has no idea what's available — they need someone to tell them the workspace name out-of-band.
-
-**What it could look like:**
-- Modify `list_workspaces` to return all workspaces on the server, with a `joined` status on each
-- Response shows which you're a member of and which you aren't, so the agent can suggest joining relevant ones
-- Example response: `"dashboard-redesign (joined)", "api-migration (not joined)", "onboarding-flow (not joined)"`
-
-**Why it matters:** Workspace discovery is the first thing a new user needs. Without it, Seam requires out-of-band communication to share workspace names — which defeats the purpose of having a shared context server. An agent should be able to say "there are 3 workspaces on this server, you've joined 1 — want to join the others?"
-
-**Implementation notes:**
-- Simple change to `list_workspaces` — query all workspaces, LEFT JOIN against membership
-- No new tools needed, just richer output from the existing tool
-- Tool description should be updated to reflect the discovery capability
+- **Workspace Discovery** — `list_workspaces` now shows all workspaces with joined/not-joined status
+- **Repo-to-Workspace Linking** — `link_repo`, `unlink_repo`, `resolve_repo` tools for auto-activating workspaces by repo
 
 ---
 
