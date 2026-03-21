@@ -10,6 +10,12 @@ import os from "node:os";
 const PORT = parseInt(process.env.SEAM_PORT ?? "3000", 10);
 const DB_PATH = process.env.SEAM_DB_PATH ?? "./seam.db";
 
+// Ensure the database directory exists
+const dbDir = path.dirname(DB_PATH);
+if (dbDir !== "." && !fs.existsSync(dbDir)) {
+  fs.mkdirSync(dbDir, { recursive: true });
+}
+
 // Initialize database
 const db = createDatabase(DB_PATH);
 
