@@ -25,6 +25,24 @@ Items we want to build next. These came up during MVP development and are high-v
 
 ---
 
+### Workspace Discovery
+
+**The problem:** `list_workspaces` only shows workspaces you've joined. There's no way to discover what other workspaces exist on the server. A new teammate has no idea what's available — they need someone to tell them the workspace name out-of-band.
+
+**What it could look like:**
+- Modify `list_workspaces` to return all workspaces on the server, with a `joined` status on each
+- Response shows which you're a member of and which you aren't, so the agent can suggest joining relevant ones
+- Example response: `"dashboard-redesign (joined)", "api-migration (not joined)", "onboarding-flow (not joined)"`
+
+**Why it matters:** Workspace discovery is the first thing a new user needs. Without it, Seam requires out-of-band communication to share workspace names — which defeats the purpose of having a shared context server. An agent should be able to say "there are 3 workspaces on this server, you've joined 1 — want to join the others?"
+
+**Implementation notes:**
+- Simple change to `list_workspaces` — query all workspaces, LEFT JOIN against membership
+- No new tools needed, just richer output from the existing tool
+- Tool description should be updated to reflect the discovery capability
+
+---
+
 ## Deferred Enhancements
 
 Ideas that are out of scope for now but worth revisiting as Seam matures.
