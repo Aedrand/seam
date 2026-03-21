@@ -12,7 +12,7 @@ export const TOOL_DEFINITIONS = [
   {
     name: "write_section",
     description:
-      "Create or update a section of shared project context. Section names must be lowercase alphanumeric with hyphens (e.g., 'design-philosophy', 'current-status'). For new sections, omit expected_version. For updates, include the version number you last read \u2014 if someone else has updated it since, the write will fail and you should re-read before trying again. Write context that would help the next agent working on this project: design decisions, conventions, status, constraints \u2014 the understanding that isn't in the code. Each section should cover one topic and stay concise.",
+      "Create or update a section of shared project context. Always call get_index first to check what already exists \u2014 avoid creating sections that overlap with existing ones. Section names must be lowercase alphanumeric with hyphens (e.g., 'design-philosophy', 'current-status'). For new sections, omit expected_version. For updates, include the version number you last read \u2014 if someone else has updated it since, the write will fail and you should re-read before trying again. Write context that would help the next agent working on this project: design decisions, conventions, status, constraints \u2014 the understanding that isn't in the code. Each section should cover one topic and stay concise.",
   },
   {
     name: "delete_section",
