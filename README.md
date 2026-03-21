@@ -1,8 +1,14 @@
 # Seam
 
-A lightweight, open-source MCP server that gives AI agents shared project context over a network.
+Shared context for AI agents. That's it.
 
-AI agents lose context between sessions and can't share it across machines. When two people's agents work on the same project, each starts cold -- re-reading files, re-building mental models, unaware of decisions the other has already made. Seam gives agents a shared place to read and write project-level understanding. An agent starts up, pulls shared context, and immediately knows how to approach the work. During its session, it writes back what it's learned for the next agent. A remote, collaborative CLAUDE.md.
+Your agents forget everything between sessions. When two people's agents work on the same project, they're strangers every time -- re-reading files, re-discovering conventions, unaware that someone already made the decisions they're about to make again.
+
+Seam is a tiny MCP server that gives agents a shared place to read and write project-level understanding. Design philosophy, architectural decisions, who's working on what, what's been tried and rejected -- the stuff that matters but never ends up in the code. Think of it as a remote, collaborative CLAUDE.md.
+
+An agent connects, reads the index, knows what's going on, and gets to work. Before it leaves, it writes back what it learned. The next agent picks up where it left off. No cold starts, no re-explaining, no "wait, didn't we already decide this?"
+
+It's an Express server, a SQLite database, and 8 MCP tools. About 400 lines of actual logic. We're not trying to build an AI memory platform or an agent orchestration framework -- there are plenty of those already, and they're all heavier than they need to be.
 
 ## Quick Start
 
@@ -28,7 +34,7 @@ claude mcp add seam --transport url \
   --header "Authorization: Bearer sk_your-name_..."
 ```
 
-**3. Start a session.** The agent discovers Seam's tools automatically. No further configuration needed.
+**3. Start a session.** The agent discovers Seam's tools automatically. No CLAUDE.md changes, no configuration, no setup ritual. Just start working.
 
 ### Path B: Deploy your own server
 
@@ -50,7 +56,7 @@ Share this with your team to register.
 ====================================
 ```
 
-Share this with your team. Register and add to Claude Code the same way as Path A, using `http://localhost:3000` as the server URL.
+Share this with your team like a Wi-Fi password. Register and add to Claude Code the same way as Path A, using `http://localhost:3000` as the server URL.
 
 **Deploy to Railway (production):**
 
@@ -85,10 +91,10 @@ Register and add to Claude Code using the domain Railway assigned.
 
 Seam stores shared context as an **index** plus **sections**.
 
-The **index** is a small pointer file loaded on startup. It lists every section of shared context with a description, author, timestamp, and version number. The descriptions tell agents what each section contains and when they should read it.
+The **index** is small -- always safe to load, never blows out context. It lists every section with a description, author, timestamp, and version number. The descriptions tell agents what's inside and when to read it.
 
 ```markdown
-## Shared Context — dashboard-redesign
+## Shared Context -- dashboard-redesign
 
 ### design-philosophy (v2)
 Dense, scan-optimized dashboard for financial analysts. Covers
@@ -112,42 +118,41 @@ and avoid duplicating work.
 *sarah, 2026-03-20*
 ```
 
-The index is small enough to always fit in context. The actual content lives in separate **sections** -- freeform prose written by agents, for agents. Sections cover things like design philosophy, architectural decisions, constraints, current status, and the "why" behind patterns. Agents read only the sections relevant to their current task.
+**Sections** are freeform prose -- not key-value pairs, not structured data. Written by agents, for agents, about the understanding that isn't in the code. Agents read only the sections relevant to their current task. Working on the frontend? Grab design-philosophy and component-conventions. Skip api-architecture.
 
-The index refreshes automatically -- every `read_section` call returns the current index alongside the section content. Agents stay up to date as a side effect of doing their normal work.
+The index refreshes automatically -- every `read_section` call returns the current index alongside the section content. Agents stay current as a side effect of doing their normal work.
+
+**Version checking** keeps agents from stepping on each other. Every section has a version number. When you update a section, you include the version you last read. If someone else changed it since, the write fails -- re-read, incorporate their changes, try again. Simple optimistic concurrency, no locking, no coordination server.
 
 ## MCP Tools
 
-### Context Tools
+Agents learn how to use Seam from the tool descriptions alone. No setup, no instructions file -- installing the MCP server is the only step.
 
-**`get_index()`** -- Call this at the start of every session to see what shared project context is available for your workspace. Returns section names, descriptions, authors, timestamps, and version numbers. Use the descriptions to decide which sections are relevant to your current task -- you don't need to read them all.
+### Context
 
-**`read_section(name)`** -- Read the full content of a shared context section. Also returns a fresh copy of the index so you stay current on what's available. Only read sections relevant to your current task.
+| Tool | What it does |
+|------|-------------|
+| `get_index()` | See what shared context exists. Call this on startup. |
+| `read_section(name)` | Read a section's content + get a fresh index. |
+| `write_section(name, content, description, expected_version?)` | Create or update a section. Version check prevents silent overwrites. |
+| `delete_section(name, expected_version)` | Remove a section. Version check prevents deleting something that changed. |
 
-**`write_section(name, content, description, expected_version?)`** -- Create or update a section of shared project context. For new sections, omit expected_version. For updates, include the version number you last read -- if someone else has updated it since, the write will fail and you should re-read before trying again. Write context that would help the next agent working on this project: design decisions, conventions, status, constraints -- the understanding that isn't in the code. Each section should cover one topic and stay concise.
+### Workspaces
 
-**`delete_section(name, expected_version)`** -- Remove a section of shared context that is no longer relevant. Requires the version number you last read to prevent deleting a section that has been updated since you read it.
-
-### Workspace Tools
-
-**`create_workspace(name)`** -- Create a new shared context workspace and automatically join it. Use workspaces to separate context by project.
-
-**`join_workspace(name)`** -- Join an existing workspace to access its shared context. Sets this as your active workspace.
-
-**`list_workspaces()`** -- List all workspaces you have joined.
-
-**`set_workspace(name)`** -- Switch your active workspace. All subsequent context operations will use this workspace. You must have already joined the workspace.
+| Tool | What it does |
+|------|-------------|
+| `create_workspace(name)` | Create a workspace and join it. |
+| `join_workspace(name)` | Join an existing workspace. |
+| `list_workspaces()` | See your workspaces. |
+| `set_workspace(name)` | Switch active workspace. |
 
 ## Workspaces
 
-All context is scoped to a workspace. Agents in one workspace can't see another workspace's sections or index.
+All context is scoped to a workspace. Different projects, different workspaces, no cross-contamination.
 
-- Any registered user can create workspaces. No admin, no ownership.
-- Any registered user can join any workspace by name. No invite required.
-- One identity works across all workspaces on the server. Register once, join as many workspaces as needed.
-- The agent operates in one workspace at a time. Switching projects means changing the workspace in the MCP config, or having separate MCP server entries per project.
-
-You can set a default workspace in the MCP URL:
+- Any registered user can create and join workspaces. No admin, no ownership, no invite required.
+- One identity works across all workspaces. Register once, join whatever you need.
+- Set a default workspace in the MCP URL so your agent lands in the right place:
 
 ```
 https://your-server.example.com/mcp?workspace=dashboard-redesign
@@ -157,40 +162,27 @@ https://your-server.example.com/mcp?workspace=dashboard-redesign
 
 ### `POST /register`
 
-Register a new user with the bootstrap token. This is the only REST endpoint -- everything else goes through MCP.
-
-**Request:**
+The only REST endpoint. Everything else goes through MCP.
 
 ```json
-{
-  "bootstrap_token": "boot_...",
-  "display_name": "andrew"
-}
-```
+// Request
+{ "bootstrap_token": "boot_...", "display_name": "andrew" }
 
-**Response:**
-
-```json
-{
-  "api_key": "sk_andrew_..."
-}
+// Response
+{ "api_key": "sk_andrew_..." }
 ```
 
 Display names are unique and immutable. The API key is your permanent credential.
 
 ## Configuration
 
-### Environment Variables
-
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `PORT` | `3000` | Server port |
 | `SEAM_PORT` | `3000` | Server port (alias) |
-| `SEAM_DB_PATH` | `./seam.db` | Path to the SQLite database file |
+| `SEAM_DB_PATH` | `./seam.db` | SQLite database path |
 
-### CLI Commands
-
-Regenerate the bootstrap token (existing registrations and API keys remain valid):
+Regenerate the bootstrap token if it leaks (existing registrations stay valid):
 
 ```bash
 npm run cli -- regenerate-token
@@ -199,11 +191,19 @@ npm run cli -- regenerate-token
 ## Development
 
 ```bash
-npm run dev        # Start development server (tsx)
-npm test           # Run tests (vitest)
-npm run build      # Build for production (tsup)
+npm run dev        # Start dev server
+npm test           # Run tests
+npm run build      # Build for production
 ```
+
+## What Seam Is Not
+
+**Not a memory system.** Seam doesn't store conversation history or help an agent remember its own sessions. It stores shared project context that any agent can contribute to and benefit from.
+
+**Not a coordination platform.** Agents don't message each other through Seam. They read and write shared understanding. If you need agent-to-agent messaging, consensus protocols, or task orchestration -- that's a different tool for a different day.
+
+**Not an AI product.** No embeddings, no knowledge graphs, no semantic search, no LLM on the server. It's a SQLite database with an MCP interface. The intelligence is in the agents, not the infrastructure.
 
 ## License
 
-MIT
+MIT -- do whatever you want with it.
