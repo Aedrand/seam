@@ -56,14 +56,11 @@
 
   <!-- ═══ CENTER: SEAM SERVER ═══ -->
   <g>
-    <!-- Glow behind server -->
-    <rect x="282" y="92" width="316" height="216" rx="18" fill="#6366f1" opacity="0.06"/>
-
     <!-- Server box -->
-    <rect x="290" y="100" width="300" height="200" rx="10" fill="#111525" stroke="#6366f1" stroke-width="1.5"/>
+    <rect x="290" y="100" width="300" height="200" rx="10" fill="#181d35" stroke="#6366f1" stroke-width="1.5"/>
 
-    <!-- Server header background (inset to avoid touching corners) -->
-    <rect x="292" y="102" width="296" height="24" rx="0" fill="#181d35"/>
+    <!-- Server body (below header, no rounded corners needed — sits inside the box) -->
+    <rect x="292" y="129" width="296" height="170" fill="#111525"/>
 
     <!-- Divider line -->
     <line x1="292" y1="128" x2="588" y2="128" stroke="#3a4265" stroke-width="0.5"/>
