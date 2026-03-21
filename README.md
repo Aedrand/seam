@@ -54,7 +54,7 @@ You'll receive an API key: `sk_your-name_...`
 **2. Connect to Claude Code:**
 
 ```bash
-claude mcp add seam --transport http \
+claude mcp add --transport http \
   -H "Authorization: Bearer sk_your-name_..." \
   -s user seam https://your-server.example.com/mcp
 ```
@@ -69,7 +69,7 @@ claude plugin install seam
 claude plugin install seam -s project
 ```
 
-The plugin adds auto-behaviors: your agent will read shared context on startup and write back what it learned at session end. If installed globally, it only activates in projects that have a Seam MCP server connected. Without the plugin, the tools are still available -- you just use them manually.
+The plugin automatically loads shared context on startup and guides the agent to propose writing back decisions throughout the session. If installed globally, it only activates in projects that have a Seam MCP server connected. Without the plugin, the tools are still available -- you just use them manually.
 
 **4. Start a session.** The agent discovers Seam's tools automatically. No CLAUDE.md changes, no setup ritual. Just start working.
 
