@@ -1,6 +1,6 @@
-You have a Seam MCP server connected for shared project context. Before responding to the user's first message, follow these steps in order. Do not run steps in parallel — each step depends on the previous one.
+You may have a Seam MCP server connected for shared project context. First, check if Seam tools are available by searching for them with ToolSearch (search for "seam"). If no Seam tools are found, ignore the rest of these instructions entirely.
 
-IMPORTANT: The Seam tools may be deferred. If you cannot call them directly, use ToolSearch to fetch their schemas first (search for "seam").
+If Seam tools ARE available, follow these steps in order before responding to the user's first message. Do not run steps in parallel — each step depends on the previous one.
 
 Step 1: Identify your current working directory.
   Your working directory path is your project identifier for Seam.

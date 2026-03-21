@@ -62,10 +62,14 @@ claude mcp add seam --transport http \
 **3. Install the plugin (optional, recommended):**
 
 ```bash
-claude plugin add https://github.com/Aedrand/seam.git --path plugin
+# User-wide (all projects — checks for Seam connection before activating)
+claude plugin install seam
+
+# Or project-scoped (only this repo)
+claude plugin install seam -s project
 ```
 
-The plugin adds auto-behaviors: your agent will read shared context on startup and write back what it learned at session end. Without the plugin, the tools are still available -- you just use them manually.
+The plugin adds auto-behaviors: your agent will read shared context on startup and write back what it learned at session end. If installed globally, it only activates in projects that have a Seam MCP server connected. Without the plugin, the tools are still available -- you just use them manually.
 
 **4. Start a session.** The agent discovers Seam's tools automatically. No CLAUDE.md changes, no setup ritual. Just start working.
 
