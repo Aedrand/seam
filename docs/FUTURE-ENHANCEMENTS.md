@@ -49,6 +49,24 @@ Ideas that are out of scope for now but worth revisiting as Seam matures.
 
 ---
 
+## OAuth Authentication
+
+**The limitation today:** Users register via a curl command with a bootstrap token and receive a plaintext API key. The key is passed in the `Authorization` header and stored in Claude Code's config. This works for small trusted teams but has several drawbacks: keys never expire, there's no revocation mechanism, keys are stored in plaintext config files, and the registration flow happens outside the agent (curl command).
+
+**What it could look like:**
+- MCP spec-native OAuth flow — the agent redirects to a login page, user authenticates, server issues a token
+- Token expiry and refresh — short-lived access tokens with refresh capability
+- Key revocation — ability to revoke a compromised key without re-registering
+- Eliminates the manual curl registration step — the agent handles the entire auth flow
+- Could integrate with existing identity providers (GitHub OAuth, Google, etc.) instead of managing credentials directly
+- API key hashing — store only hashes of API keys in the database, not plaintext
+
+**Why it's deferred:** The bootstrap token + API key model is simple and sufficient for small trusted teams. OAuth adds significant complexity (token lifecycle, refresh flows, identity provider integration) and the MCP OAuth spec is still maturing. The current model matches the "Wi-Fi password" philosophy — share a secret, get access.
+
+**When to revisit:** When Seam is exposed to less-trusted environments, when teams need key revocation, when the MCP OAuth spec stabilizes across clients, or when the manual curl registration step becomes a meaningful adoption barrier.
+
+---
+
 ## Invite-Based Registration
 
 **The limitation today:** Anyone with the bootstrap token can register. For small trusted teams this is fine. For larger groups or servers on the public internet, there's no way to control who joins.

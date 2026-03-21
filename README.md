@@ -38,15 +38,23 @@ curl -X POST https://your-server.example.com/register \
 
 You'll receive an API key: `sk_your-name_...`
 
-**2. Add to Claude Code:**
+**2. Connect to Claude Code:**
 
 ```bash
-claude mcp add seam --transport url \
-  --url "https://your-server.example.com/mcp" \
-  --header "Authorization: Bearer sk_your-name_..."
+claude mcp add seam --transport http \
+  -H "Authorization: Bearer sk_your-name_..." \
+  -s user seam https://your-server.example.com/mcp
 ```
 
-**3. Start a session.** The agent discovers Seam's tools automatically. No CLAUDE.md changes, no configuration, no setup ritual. Just start working.
+**3. Install the plugin (optional, recommended):**
+
+```bash
+claude plugin add https://github.com/Aedrand/seam.git --path plugin
+```
+
+The plugin adds auto-behaviors: your agent will read shared context on startup and write back what it learned at session end. Without the plugin, the tools are still available -- you just use them manually.
+
+**4. Start a session.** The agent discovers Seam's tools automatically. No CLAUDE.md changes, no setup ritual. Just start working.
 
 ### Path B: Deploy your own server
 
