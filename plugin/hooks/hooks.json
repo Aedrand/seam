@@ -18,7 +18,7 @@
         "hooks": [
           {
             "type": "prompt",
-            "prompt": "Did the agent just make a design decision, choose a pattern, discover a constraint, or learn something non-obvious that isn't captured in code and would help other agents on this project? Respond ONLY with JSON.\nYes: {\"ok\":false,\"reason\":\"one sentence describing what should be written to Seam\"}\nNo: {\"ok\":true}",
+            "prompt": "Did the agent just make a design decision, choose a pattern, discover a constraint, or learn something non-obvious that isn't captured in code and would help other agents on this project? If yes, return: {\"decision\":\"block\",\"reason\":\"one sentence of what to write to Seam\"} If no, return: {\"decision\":\"approve\"} Return ONLY the JSON object.",
             "timeout": 15
           }
         ]
