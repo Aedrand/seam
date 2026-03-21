@@ -257,13 +257,11 @@ npm run build      # Build for production
 
 </details>
 
-## What Seam Is Not
+## Scope
 
-**Not a memory system.** Seam doesn't store conversation history or help an agent remember its own sessions. It stores shared project context that any agent can contribute to and benefit from. Different problem, different tools.
+Seam is focused on one thing: shared project understanding between agents. It's a SQLite database with an MCP interface — no embeddings, no knowledge graphs, no LLM on the server. The intelligence is in the agents, not the infrastructure.
 
-**Not a coordination platform.** Agents don't message each other through Seam. They read and write shared understanding. If you need agent-to-agent messaging, consensus protocols, or task orchestration -- that's a different problem too.
-
-**Not magic.** No embeddings, no knowledge graphs, no semantic search, no LLM on the server. It's a SQLite database with an MCP interface. The intelligence is in the agents, not the infrastructure.
+It doesn't try to be an agent memory system, a coordination platform, or a messaging bus. Those are interesting problems, but they're different problems. Seam just makes sure your agents know what your team has already figured out.
 
 ## License
 
