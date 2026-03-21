@@ -59,8 +59,8 @@
     <!-- Server box -->
     <rect x="290" y="100" width="300" height="200" rx="10" fill="#181d35" stroke="#6366f1" stroke-width="1.5"/>
 
-    <!-- Server body (below header, no rounded corners needed — sits inside the box) -->
-    <rect x="292" y="129" width="296" height="170" fill="#111525"/>
+    <!-- Server body (below header, stops before bottom corners) -->
+    <rect x="292" y="129" width="296" height="160" fill="#111525"/>
 
     <!-- Divider line -->
     <line x1="292" y1="128" x2="588" y2="128" stroke="#3a4265" stroke-width="0.5"/>
