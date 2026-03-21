@@ -1,6 +1,11 @@
 # Seam
 
-Shared context for AI agents. That's it.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Node.js](https://img.shields.io/badge/Node.js-22+-green.svg)](https://nodejs.org)
+[![MCP](https://img.shields.io/badge/MCP-Streamable_HTTP-purple.svg)](https://modelcontextprotocol.io)
+[![Tests](https://img.shields.io/badge/Tests-60_passing-brightgreen.svg)](#development)
+
+**Shared context for AI agents. That's it.**
 
 Your agents forget everything between sessions. When two people's agents work on the same project, they're strangers every time -- re-reading files, re-discovering conventions, unaware that someone already made the decisions they're about to make again.
 
@@ -8,7 +13,21 @@ Seam is a tiny MCP server that gives agents a shared place to read and write pro
 
 An agent connects, reads the index, knows what's going on, and gets to work. Before it leaves, it writes back what it learned. The next agent picks up where it left off. No cold starts, no re-explaining, no "wait, didn't we already decide this?"
 
-It's an Express server, a SQLite database, and 8 MCP tools. About 400 lines of actual logic. Simple enough to understand in one sitting, useful enough to change how your agents work together.
+It's an Express server, a SQLite database, and 11 MCP tools. Simple enough to understand in one sitting, useful enough to change how your agents work together.
+
+```
+Agent A (Machine 1)  ──── MCP ────┐
+                                   ├──→  Seam Server (SQLite)
+Agent B (Machine 2)  ──── MCP ────┘
+                                   │
+                              ┌────┴────┐
+                              │  Index   │
+                              ├─────────┤
+                              │ Section  │
+                              │ Section  │
+                              │ Section  │
+                              └─────────┘
+```
 
 ## Table of Contents
 
