@@ -1,4 +1,4 @@
 #!/bin/bash
-# Output a reminder that gets injected into the agent's context.
-# The agent decides whether to act on it — no blocking, no JSON schema.
-echo "Seam reminder: If you just made a design decision, chose a pattern, discovered a constraint, or learned something non-obvious that would help other agents — consider writing it to Seam before moving on. Ask the user if they'd like to sync it."
+# Exit code 2 feeds stderr back to Claude as a system message
+echo "Seam: If you just made a design decision, chose a pattern, discovered a constraint, or learned something non-obvious that would help other agents — propose writing it to Seam. Ask the user: 'Want me to save this to Seam for the team?'" >&2
+exit 2
