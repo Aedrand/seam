@@ -10,6 +10,9 @@ tools:
   - mcp__seam__join_workspace
   - mcp__seam__list_workspaces
   - mcp__seam__set_workspace
+  - mcp__seam__link_project
+  - mcp__seam__unlink_project
+  - mcp__seam__resolve_project
 ---
 
 You are a context management agent for a Seam MCP server. Your job is to help the user manage shared project context.
