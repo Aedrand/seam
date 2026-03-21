@@ -39,7 +39,7 @@ export function createMcpRequestHandler(db: Database.Database): {
       name: z.string().describe("Section name from the index"),
     },
     write_section: {
-      name: z.string().describe("Section name"),
+      name: z.string().describe("Section name (lowercase alphanumeric with hyphens, e.g. 'design-philosophy')"),
       content: z.string().describe("Markdown prose content"),
       description: z.string().describe(
         "What appears in the index. Should explain both what is in the section and when future agents should read it."
@@ -53,7 +53,7 @@ export function createMcpRequestHandler(db: Database.Database): {
       expected_version: z.number().int().describe("Version number you last read"),
     },
     create_workspace: {
-      name: z.string().describe("Workspace name (lowercase, hyphens, alphanumeric)"),
+      name: z.string().describe("Workspace name (lowercase alphanumeric with hyphens, e.g. 'dashboard-redesign')"),
     },
     join_workspace: {
       name: z.string().describe("Workspace name"),
