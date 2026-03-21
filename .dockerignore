@@ -1,0 +1,9 @@
+node_modules
+dist
+*.db
+.seam
+docs
+tests
+src
+tsconfig.json
+tsup.config.ts
