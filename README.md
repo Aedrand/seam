@@ -19,19 +19,9 @@ An agent connects, reads the index, knows what's going on, and gets to work. Bef
 
 It's an Express server, a SQLite database, and 11 MCP tools. Simple enough to understand in one sitting, useful enough to change how your agents work together.
 
-```
-Agent A (Machine 1)  ──── MCP ────┐
-                                   ├──→  Seam Server (SQLite)
-Agent B (Machine 2)  ──── MCP ────┘
-                                   │
-                              ┌────┴────┐
-                              │  Index   │
-                              ├─────────┤
-                              │ Section  │
-                              │ Section  │
-                              │ Section  │
-                              └─────────┘
-```
+<p align="center">
+  <img src="assets/lifecycle.svg" alt="How Seam works — connect, read, work, write back in a continuous loop while teammates do the same" width="100%">
+</p>
 
 ## Table of Contents
 
