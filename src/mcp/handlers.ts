@@ -5,6 +5,9 @@ import {
   joinWorkspace,
   listWorkspaces,
   getWorkspaceIdForMember,
+  linkRepo,
+  unlinkRepo,
+  resolveRepo,
 } from "../core/workspaces.js";
 import { SeamError } from "../core/errors.js";
 
@@ -58,6 +61,12 @@ export class SeamHandlers {
           return this.handleListWorkspaces(userId);
         case "set_workspace":
           return this.handleSetWorkspace(userId, sessionId, args.name as string);
+        case "link_repo":
+          return this.handleLinkRepo(userId, args.repo_identifier as string, args.workspace as string);
+        case "unlink_repo":
+          return this.handleUnlinkRepo(userId, args.repo_identifier as string);
+        case "resolve_repo":
+          return this.handleResolveRepo(userId, sessionId, args.repo_identifier as string);
         default:
           return this.errorResult(`Unknown tool: ${toolName}`);
       }
@@ -132,6 +141,26 @@ export class SeamHandlers {
     const workspaceId = getWorkspaceIdForMember(this.db, userId, name);
     this.activeSessions.set(sessionId, { workspaceName: name, workspaceId });
     return this.textResult(`Active workspace set to "${name}".`);
+  }
+
+  private handleLinkRepo(userId: string, repoIdentifier: string, workspaceName: string): ToolResult {
+    linkRepo(this.db, userId, repoIdentifier, workspaceName);
+    return this.textResult(`Linked "${repoIdentifier}" to workspace "${workspaceName}". Future sessions from this repo will auto-activate that workspace.`);
+  }
+
+  private handleUnlinkRepo(userId: string, repoIdentifier: string): ToolResult {
+    unlinkRepo(this.db, userId, repoIdentifier);
+    return this.textResult(`Unlinked "${repoIdentifier}".`);
+  }
+
+  private handleResolveRepo(userId: string, sessionId: string, repoIdentifier: string): ToolResult {
+    const workspaceName = resolveRepo(this.db, userId, repoIdentifier);
+    if (!workspaceName) {
+      return this.textResult(`No workspace linked to "${repoIdentifier}". Use link_repo to create a link, or set_workspace to choose one manually.`);
+    }
+    const workspaceId = getWorkspaceIdForMember(this.db, userId, workspaceName);
+    this.activeSessions.set(sessionId, { workspaceName, workspaceId });
+    return this.textResult(`Resolved "${repoIdentifier}" to workspace "${workspaceName}" and set as active.`);
   }
 
   private textResult(text: string): ToolResult {

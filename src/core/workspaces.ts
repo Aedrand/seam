@@ -110,3 +110,48 @@ export function getWorkspaceIdForMember(
 
   return workspace.id;
 }
+
+export function linkRepo(
+  db: Database.Database,
+  userId: string,
+  repoIdentifier: string,
+  workspaceName: string
+): void {
+  // Verify the workspace exists and user is a member
+  getWorkspaceIdForMember(db, userId, workspaceName);
+
+  const now = new Date().toISOString();
+  db.prepare(
+    `INSERT INTO repo_links (user_id, repo_identifier, workspace_name, created_at)
+     VALUES (?, ?, ?, ?)
+     ON CONFLICT (user_id, repo_identifier) DO UPDATE SET workspace_name = ?, created_at = ?`
+  ).run(userId, repoIdentifier, workspaceName, now, workspaceName, now);
+}
+
+export function unlinkRepo(
+  db: Database.Database,
+  userId: string,
+  repoIdentifier: string
+): void {
+  const result = db.prepare(
+    "DELETE FROM repo_links WHERE user_id = ? AND repo_identifier = ?"
+  ).run(userId, repoIdentifier);
+
+  if (result.changes === 0) {
+    throw new SeamError("link_not_found", "No repo link found for that identifier.");
+  }
+}
+
+export function resolveRepo(
+  db: Database.Database,
+  userId: string,
+  repoIdentifier: string
+): string | null {
+  const row = db
+    .prepare(
+      "SELECT workspace_name FROM repo_links WHERE user_id = ? AND repo_identifier = ?"
+    )
+    .get(userId, repoIdentifier) as { workspace_name: string } | undefined;
+
+  return row?.workspace_name ?? null;
+}

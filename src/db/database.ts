@@ -31,6 +31,14 @@ export function createDatabase(dbPath: string): Database.Database {
       PRIMARY KEY (user_id, workspace_id)
     );
 
+    CREATE TABLE IF NOT EXISTS repo_links (
+      user_id TEXT NOT NULL REFERENCES users(id),
+      repo_identifier TEXT NOT NULL,
+      workspace_name TEXT NOT NULL,
+      created_at TEXT NOT NULL,
+      PRIMARY KEY (user_id, repo_identifier)
+    );
+
     CREATE TABLE IF NOT EXISTS sections (
       id TEXT PRIMARY KEY,
       workspace_id TEXT NOT NULL REFERENCES workspaces(id),

@@ -5,6 +5,9 @@ import {
   createWorkspace,
   joinWorkspace,
   listWorkspaces,
+  linkRepo,
+  unlinkRepo,
+  resolveRepo,
 } from "../../src/core/workspaces.js";
 
 describe("workspaces", () => {
@@ -107,6 +110,60 @@ describe("workspaces", () => {
       // Bob sees my-project but hasn't joined
       const workspaces = listWorkspaces(db, bob.id);
       expect(workspaces).toContainEqual({ name: "my-project", joined: false });
+    });
+  });
+
+  describe("repo linking", () => {
+    it("links a repo to a workspace and resolves it", () => {
+      createWorkspace(db, userId, "my-project");
+      linkRepo(db, userId, "github.com/org/repo", "my-project");
+
+      const resolved = resolveRepo(db, userId, "github.com/org/repo");
+      expect(resolved).toBe("my-project");
+    });
+
+    it("returns null for unlinked repo", () => {
+      const resolved = resolveRepo(db, userId, "github.com/org/unknown");
+      expect(resolved).toBeNull();
+    });
+
+    it("overwrites existing link", () => {
+      createWorkspace(db, userId, "project-a");
+      createWorkspace(db, userId, "project-b");
+      linkRepo(db, userId, "github.com/org/repo", "project-a");
+      linkRepo(db, userId, "github.com/org/repo", "project-b");
+
+      const resolved = resolveRepo(db, userId, "github.com/org/repo");
+      expect(resolved).toBe("project-b");
+    });
+
+    it("unlinks a repo", () => {
+      createWorkspace(db, userId, "my-project");
+      linkRepo(db, userId, "github.com/org/repo", "my-project");
+      unlinkRepo(db, userId, "github.com/org/repo");
+
+      const resolved = resolveRepo(db, userId, "github.com/org/repo");
+      expect(resolved).toBeNull();
+    });
+
+    it("fails to unlink a repo that isn't linked", () => {
+      expect(() => unlinkRepo(db, userId, "github.com/org/unknown")).toThrow(
+        "No repo link found"
+      );
+    });
+
+    it("fails to link to a workspace you haven't joined", () => {
+      createWorkspace(db, userId, "my-project");
+
+      const { token } = initializeBootstrapToken(db);
+      register(db, token, "eve");
+      const eve = db
+        .prepare("SELECT id FROM users WHERE display_name = 'eve'")
+        .get() as { id: string };
+
+      expect(() => linkRepo(db, eve.id, "github.com/org/repo", "my-project")).toThrow(
+        "not a member"
+      );
     });
   });
 });

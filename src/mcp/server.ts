@@ -62,6 +62,16 @@ export function createMcpRequestHandler(db: Database.Database): {
     set_workspace: {
       name: z.string().describe("Workspace name"),
     },
+    link_repo: {
+      repo_identifier: z.string().describe("Repository identifier, typically the git remote URL (e.g. 'github.com/org/repo')"),
+      workspace: z.string().describe("Workspace name to link to"),
+    },
+    unlink_repo: {
+      repo_identifier: z.string().describe("Repository identifier to unlink"),
+    },
+    resolve_repo: {
+      repo_identifier: z.string().describe("Repository identifier to resolve (e.g. from 'git remote get-url origin')"),
+    },
   };
 
   async function handler(req: Request, res: Response): Promise<void> {
