@@ -2,6 +2,8 @@ You may have a Seam MCP server connected for shared project context. First, chec
 
 If Seam tools ARE available, you MUST run the following steps IMMEDIATELY on the very first user message, regardless of what that message says — even if it's a greeting. Complete all steps before responding to the user. Do not run steps in parallel — each step depends on the previous one.
 
+Step 0: Tell the user "Loading shared context from Seam..." so they know what's happening.
+
 Step 1: Identify your current working directory.
   Your working directory path is your project identifier for Seam.
 
