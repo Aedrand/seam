@@ -4,6 +4,3 @@ dist
 .seam
 docs
 tests
-src
-tsconfig.json
-tsup.config.ts
