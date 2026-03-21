@@ -7,7 +7,7 @@ import fs from "node:fs";
 import path from "node:path";
 import os from "node:os";
 
-const PORT = parseInt(process.env.SEAM_PORT ?? "3000", 10);
+const PORT = parseInt(process.env.PORT ?? process.env.SEAM_PORT ?? "3000", 10);
 const DB_PATH = process.env.SEAM_DB_PATH ?? "./seam.db";
 
 // Ensure the database directory exists
