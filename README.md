@@ -7,7 +7,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Node.js](https://img.shields.io/badge/Node.js-22+-green.svg)](https://nodejs.org)
 [![MCP](https://img.shields.io/badge/MCP-Streamable_HTTP-purple.svg)](https://modelcontextprotocol.io)
-[![Tests](https://img.shields.io/badge/Tests-60_passing-brightgreen.svg)](#development)
+[![Tests](https://img.shields.io/badge/Tests-passing-brightgreen.svg)](#development)
 
 **Shared context for AI agents. That's it.**
 
@@ -15,7 +15,7 @@ Your agents forget everything between sessions. When two people's agents work on
 
 Seam is a tiny MCP server that gives agents a shared place to read and write project-level understanding. Design philosophy, architectural decisions, who's working on what, what's been tried and rejected -- the stuff that matters but never ends up in the code. Think of it as a remote, collaborative CLAUDE.md.
 
-An agent connects, reads the index, knows what's going on, and gets to work. Before it leaves, it writes back what it learned. The next agent picks up where it left off. No cold starts, no re-explaining, no "wait, didn't we already decide this?"
+An agent connects, reads the index, knows what's going on, and gets to work. As it makes decisions, it writes them back. The next agent picks up where it left off. No cold starts, no re-explaining, no "wait, didn't we already decide this?"
 
 It's an Express server, a SQLite database, and 11 MCP tools. Simple enough to understand in one sitting, useful enough to change how your agents work together.
 
@@ -62,10 +62,13 @@ claude mcp add --transport http \
 **3. Install the plugin (optional, recommended):**
 
 ```bash
-# User-wide (all projects — checks for Seam connection before activating)
+# Add the Seam marketplace (one time)
+claude plugin marketplace add https://github.com/Aedrand/seam.git
+
+# Install the plugin
 claude plugin install seam
 
-# Or project-scoped (only this repo)
+# Or project-scoped instead of global
 claude plugin install seam -s project
 ```
 
@@ -137,7 +140,7 @@ Seam stores shared context as an **index** plus **sections**.
 The **index** is small -- always safe to load, never blows out context. It lists every section with a description, author, timestamp, and version number. The descriptions tell agents what's inside and when to read it.
 
 ```markdown
-## Shared Context -- dashboard-redesign
+## Shared Context — dashboard-redesign
 
 ### design-philosophy (v2)
 Dense, scan-optimized dashboard for financial analysts. Covers
@@ -189,8 +192,16 @@ Agents learn how to use Seam from the tool descriptions alone. No setup, no inst
 |------|-------------|
 | `create_workspace(name)` | Create a workspace and join it. |
 | `join_workspace(name)` | Join an existing workspace. |
-| `list_workspaces()` | See your workspaces. |
+| `list_workspaces()` | See all workspaces on the server and which you've joined. |
 | `set_workspace(name)` | Switch active workspace. |
+
+### Project Linking
+
+| Tool | What it does |
+|------|-------------|
+| `link_project(project_path, workspace)` | Link a directory to a workspace for auto-activation. |
+| `unlink_project(project_path)` | Remove a project-to-workspace link. |
+| `resolve_project(project_path)` | Look up and activate the workspace linked to a directory. |
 
 </details>
 
@@ -233,8 +244,8 @@ Display names are unique and immutable. The API key is your permanent credential
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `PORT` | `3000` | Server port |
-| `SEAM_PORT` | `3000` | Server port (alias) |
+| `PORT` | `3000` | Server port (takes precedence) |
+| `SEAM_PORT` | `3000` | Server port (fallback if PORT is not set) |
 | `SEAM_DB_PATH` | `./seam.db` | SQLite database path |
 
 Regenerate the bootstrap token if it leaks (existing registrations stay valid):
