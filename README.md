@@ -23,19 +23,7 @@ It's an Express server, a SQLite database, and 11 MCP tools. Simple enough to un
   <img src="assets/lifecycle.svg" alt="How Seam works — connect, read, work, write back in a continuous loop while teammates do the same" width="100%">
 </p>
 
-## Table of Contents
-
-- [Quick Start](#quick-start)
-- [How It Works](#how-it-works)
-- [MCP Tools](#mcp-tools)
-- [Workspaces](#workspaces)
-- [API](#api)
-- [Configuration](#configuration)
-- [Development](#development)
-- [What Seam Is Not](#what-seam-is-not)
-
-<details>
-<summary><h2>Quick Start</h2></summary>
+## Quick Start
 
 ### Path A: Connect to an existing server
 
@@ -127,8 +115,6 @@ railway logs
 ```
 
 Register and add to Claude Code using the domain Railway assigned.
-
-</details>
 
 </details>
 
