@@ -66,6 +66,8 @@ The plugin automatically loads shared context on startup and guides the agent to
 
 ### Path B: Deploy your own server
 
+Seam is a Node.js server backed by SQLite. Run it anywhere you can run Node — a VPS, a container platform, a spare machine on your network. It just needs a persistent filesystem for the database.
+
 **Run locally:**
 
 ```bash
@@ -87,7 +89,9 @@ Share this with your team to register.
 Share this with your team like a Wi-Fi password. Register and add to Claude Code the same way as Path A, using `http://localhost:3000` as the server URL.
 
 <details>
-<summary><strong>Deploy to Railway (production)</strong></summary>
+<summary><strong>Example: Deploy to Railway</strong></summary>
+
+One way to get Seam running in production. Any platform that supports Docker and persistent volumes will work.
 
 Prerequisites: [Railway](https://railway.com) account and [Railway CLI](https://docs.railway.com/reference/cli-api) installed.
 
@@ -161,7 +165,7 @@ The index refreshes automatically -- every `read_section` call returns the curre
 <details>
 <summary><h2>MCP Tools</h2></summary>
 
-Agents learn how to use Seam from the tool descriptions alone. No setup, no instructions file -- installing the MCP server is the only step.
+Connecting the MCP server gives your agent access to these tools. The tool descriptions teach agents how to use them. For automatic startup behavior (loading context, proposing write-backs), install the optional plugin.
 
 ### Context
 
