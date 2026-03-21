@@ -80,8 +80,6 @@
     <text x="306" y="246" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="8.5" fill="#8892b0">Sprint 3 in progress.</text>
     <text x="306" y="260" font-family="'SF Mono','Fira Code',ui-monospace,monospace" font-size="8" fill="#556180" font-style="italic">*james, 2026-03-21*</text>
 
-    <!-- Fade at bottom -->
-    <rect x="291" y="272" width="298" height="27" rx="0" fill="url(#bg)" opacity="0.8"/>
   </g>
 
   <!-- ═══ RIGHT ARROWS ═══ -->
