@@ -1,0 +1,26 @@
+# Seam
+
+> Lightweight MCP server for sharing project context between AI agents across machines. A remote, collaborative CLAUDE.md.
+
+## Docs
+
+- [README](https://github.com/Aedrand/seam/blob/main/README.md): Overview, quick start, install flow, how it works
+- [AGENTS.md](https://github.com/Aedrand/seam/blob/main/AGENTS.md): Guide for AI agents — tools, guidelines, architecture
+
+## Source
+
+- [Server entry point](https://github.com/Aedrand/seam/blob/main/src/index.ts): Express + MCP wiring
+- [MCP tools](https://github.com/Aedrand/seam/blob/main/src/mcp/tools.ts): 11 tool definitions with behavioral descriptions
+- [MCP handlers](https://github.com/Aedrand/seam/blob/main/src/mcp/handlers.ts): Tool call routing and session management
+- [MCP server](https://github.com/Aedrand/seam/blob/main/src/mcp/server.ts): Streamable HTTP transport, auth, session lifecycle
+- [Sections](https://github.com/Aedrand/seam/blob/main/src/core/sections.ts): CRUD, version checking, index generation
+- [Workspaces](https://github.com/Aedrand/seam/blob/main/src/core/workspaces.ts): Create, join, list, project linking
+- [Auth](https://github.com/Aedrand/seam/blob/main/src/core/auth.ts): Bootstrap token, registration, API key validation
+- [Database](https://github.com/Aedrand/seam/blob/main/src/db/database.ts): SQLite schema and connection
+- [HTTP routes](https://github.com/Aedrand/seam/blob/main/src/http/routes.ts): Registration endpoint
+
+## Plugin
+
+- [Plugin manifest](https://github.com/Aedrand/seam/blob/main/plugin/.claude-plugin/plugin.json): Claude Code plugin metadata
+- [Session start hook](https://github.com/Aedrand/seam/blob/main/plugin/hooks/session-start.md): Startup instructions for agents
+- [Agent definition](https://github.com/Aedrand/seam/blob/main/plugin/.agents/seam-context.md): Context management agent

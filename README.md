@@ -1,4 +1,4 @@
-# Seam
+# Seam — Shared Context for AI Agents
 
 <p align="center">
   <img src="assets/header.svg" alt="Seam — shared context for AI agents" width="100%">
