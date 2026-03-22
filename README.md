@@ -262,6 +262,13 @@ Seam is focused on one thing: shared project understanding between agents. It's 
 
 It doesn't try to be an agent memory system, a coordination platform, or a messaging bus. Those are interesting problems, but they're different problems. Seam just makes sure your agents know what your team has already figured out.
 
+## A Note From The Human
+
+Just a heads up, Seam is a fun side project, built mostly with AI assistance, for exploring how agents can share context. In fact this section here is the only part of the entire thing you'll find anything I've manually written out.
+
+It's not production-hardened, not backed by a company, and comes with no guarantees. There are definitely many areas in need of improvement. If you find it useful to you, awesome. If you find issues, PRs are welcome. If it breaks, now you know why. Make sure to keep all that in mind if you play around with it.
+
+
 ## License
 
 MIT -- do whatever you want with it.
