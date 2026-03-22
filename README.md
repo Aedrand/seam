@@ -264,7 +264,7 @@ It doesn't try to be an agent memory system, a coordination platform, or a messa
 
 ## A Note From The Human
 
-Just a heads up, Seam is a fun side project, built mostly with AI assistance, for exploring how agents can share context. In fact this section here is the only part of the entire thing you'll find anything I've manually written out.
+Just a heads up: Seam is a fun side project, built mostly with AI assistance, for exploring how agents can share context. In fact this section here is the only part of the entire thing you'll find anything I've manually written out.
 
 It's not production-hardened, not backed by a company, and comes with no guarantees. There are definitely many areas in need of improvement. If you find it useful to you, awesome. If you find issues, PRs are welcome. If it breaks, now you know why. Make sure to keep all that in mind if you play around with it.
 
